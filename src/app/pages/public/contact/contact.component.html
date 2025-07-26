@@ -1,0 +1,110 @@
+<section class="hero-section">
+  <div class="container">
+    <h1>{{ 'CONTACT.HERO_TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'CONTACT.HERO_SUBTITLE' | translate }}</p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>{{ 'CONTACT.CONTACT_INFO_TITLE' | translate }}</h2>
+        
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <p>{{ 'CONTACT.ADDRESS' | translate }}</p>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <p>{{ 'CONTACT.PHONE' | translate }}</p>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <p>{{ 'CONTACT.EMAIL' | translate }}</p>
+        </div>
+        
+        <div class="opening-hours">
+          <h3>{{ 'CONTACT.OPENING_HOURS_TITLE' | translate }}</h3>
+          <div class="hours-item">
+            <span>{{ 'CONTACT.WEEKDAYS' | translate }}</span>
+            <span>{{ 'CONTACT.WEEKDAYS_HOURS' | translate }}</span>
+          </div>
+          <div class="hours-item">
+            <span>{{ 'CONTACT.SATURDAY' | translate }}</span>
+            <span>{{ 'CONTACT.SATURDAY_HOURS' | translate }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-form">
+        <h2>{{ 'CONTACT.FORM_TITLE' | translate }}</h2>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">{{ 'CONTACT.NAME_LABEL' | translate }}</label>
+            <input 
+              type="text" 
+              id="name" 
+              formControlName="name" 
+              [placeholder]="'CONTACT.NAME_PLACEHOLDER' | translate">
+            <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" class="error-message">
+              {{ 'CONTACT.NAME_ERROR' | translate }}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">{{ 'CONTACT.EMAIL_LABEL' | translate }}</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email" 
+              [placeholder]="'CONTACT.EMAIL_PLACEHOLDER' | translate">
+            <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="error-message">
+              {{ 'CONTACT.EMAIL_ERROR' | translate }}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">{{ 'CONTACT.SUBJECT_LABEL' | translate }}</label>
+            <input 
+              type="text" 
+              id="subject" 
+              formControlName="subject" 
+              [placeholder]="'CONTACT.SUBJECT_PLACEHOLDER' | translate">
+            <div *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched" class="error-message">
+              {{ 'CONTACT.SUBJECT_ERROR' | translate }}
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">{{ 'CONTACT.MESSAGE_LABEL' | translate }}</label>
+            <textarea 
+              id="message" 
+              rows="5" 
+              formControlName="message" 
+              [placeholder]="'CONTACT.MESSAGE_PLACEHOLDER' | translate"></textarea>
+            <div *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched" class="error-message">
+              {{ 'CONTACT.MESSAGE_ERROR' | translate }}
+            </div>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            [disabled]="contactForm.invalid">
+            <span *ngIf="!sending">{{ 'CONTACT.SUBMIT_BTN' | translate }}</span>
+            <span *ngIf="sending">{{ 'CONTACT.SENDING_BTN' | translate }}</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

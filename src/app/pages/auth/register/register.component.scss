@@ -1,0 +1,153 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(63, 81, 181, 0.9) 0%, rgba(25, 118, 210, 0.9) 100%),
+              url('/assets/images/login-bg.jpg') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+
+  .register-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    background: white;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+
+      .logo {
+        height: 50px;
+        margin-bottom: 0.75rem;
+        object-fit: contain;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #303f9f;
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        color: #757575;
+        font-size: 0.9rem;
+        margin: 0;
+      }
+    }
+
+    .register-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      .row-fields {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+
+        .half-width {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      .form-footer {
+        margin-top: 1rem;
+
+        button[mat-raised-button] {
+          width: 100%;
+          padding: 0.7rem;
+          font-size: 1rem;
+          font-weight: 500;
+          background-color: #3f51b5;
+          color: white;
+
+          &:hover {
+            background-color: #303f9f;
+          }
+
+          &:disabled {
+            background-color: #e0e0e0;
+          }
+        }
+      }
+
+      .register-error {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #f44336;
+        font-size: 0.85rem;
+        margin-top: -0.5rem;
+      }
+    }
+
+    .register-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+      color: #757575;
+      font-size: 0.9rem;
+
+      a {
+        color: #3f51b5;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .register-container {
+    padding: 0;
+    align-items: flex-start;
+    background: linear-gradient(135deg, rgba(63, 81, 181, 0.95) 0%, rgba(25, 118, 210, 0.95) 100%);
+
+    .register-card {
+      border-radius: 0;
+      padding: 1.5rem;
+      height: auto;
+      min-height: 100vh;
+      box-shadow: none;
+
+      .register-header {
+        .logo {
+          height: 45px;
+        }
+
+        h1 {
+          font-size: 1.3rem;
+        }
+      }
+
+      .register-form {
+        .row-fields {
+          flex-direction: column;
+          gap: 0.8rem;
+
+          .half-width {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

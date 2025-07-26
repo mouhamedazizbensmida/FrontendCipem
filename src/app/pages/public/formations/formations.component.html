@@ -1,0 +1,144 @@
+<section class="hero-section">
+  <div class="container">
+    <h1>{{ 'FORMATIONS.HERO_TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'FORMATIONS.HERO_SUBTITLE' | translate }}</p>
+  </div>
+</section>
+
+<section class="filter-section">
+  <div class="container">
+    <div class="filter-controls">
+      <button 
+        *ngFor="let category of categories" 
+        [class.active]="selectedCategory === category"
+        (click)="filterByCategory(category)"
+        class="filter-btn mat-button">
+        {{ category }}
+      </button>
+      <button 
+        [class.active]="!selectedCategory"
+        (click)="filterByCategory('')"
+        class="filter-btn mat-button">
+        {{ 'FORMATIONS.ALL_CATEGORIES' | translate }}
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="formations-section">
+  <div class="container">
+    @if (isLoading) {
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
+    
+    @if (error) {
+      <div class="error-message">
+        {{ error }}
+        <button (click)="loadFormations()" class="retry-btn mat-button">
+          {{ 'FORMATIONS.RETRY_BUTTON' | translate }}
+        </button>
+      </div>
+    }
+
+    @if (!isLoading && !error) {
+      <div class="formations-grid">
+        @for (formation of filteredFormations; track formation.id) {
+          <div class="formation-card" [routerLink]="['/formations', formation.id]">
+            <div class="formation-image">
+              <img [src]="formation.imageUrl || 'assets/images/formations/formation.jpg'" [alt]="formation.titre">
+              <div class="category-badge">{{ formation.categorie }}</div>
+            </div>
+            <div class="formation-content">
+              <h3>{{ formation.titre }}</h3>
+              <p>{{ formation.description | truncate:150 }}</p>
+              <div class="formation-footer">
+                <span class="duration">
+                  <mat-icon>schedule</mat-icon>
+                  {{ 'FORMATIONS.DURATION' | translate:{hours: formation.dureeHeures} }}
+                </span>
+                @if (formation.prix) {
+                  <span class="price">
+                    {{ 'FORMATIONS.PRICE' | translate:{price: formation.prix | number:'1.0-0'} }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <h2>{{ 'FORMATIONS.FEATURES_TITLE' | translate }}</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h3>{{ 'FORMATIONS.FEATURE_1_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.FEATURE_1_TEXT' | translate }}</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-laptop"></i>
+        </div>
+        <h3>{{ 'FORMATIONS.FEATURE_2_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.FEATURE_2_TEXT' | translate }}</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <h3>{{ 'FORMATIONS.FEATURE_3_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.FEATURE_3_TEXT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section">
+  <div class="container">
+    <h2>{{ 'FORMATIONS.STEPS_TITLE' | translate }}</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>{{ 'FORMATIONS.STEP_1_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.STEP_1_TEXT' | translate }}</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>{{ 'FORMATIONS.STEP_2_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.STEP_2_TEXT' | translate }}</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>{{ 'FORMATIONS.STEP_3_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.STEP_3_TEXT' | translate }}</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>{{ 'FORMATIONS.STEP_4_TITLE' | translate }}</h3>
+        <p>{{ 'FORMATIONS.STEP_4_TEXT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2>
+        {{ 'FORMATIONS.CTA_TITLE' | translate }}
+        <span class="question">{{ 'FORMATIONS.CTA_QUESTION' | translate }}</span>
+      </h2>
+      <button routerLink="/inscription" class="btn btn-primary">
+        {{ 'FORMATIONS.CTA_BUTTON' | translate }}
+      </button>
+    </div>
+  </div>
+</section>

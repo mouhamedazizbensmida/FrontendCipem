@@ -1,0 +1,98 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <div class="register-header">
+      <img src="assets/images/logocipem.jpg" alt="CIPEM Logo" class="logo">
+      <h1>Créer un compte</h1>
+      <p>Commencez votre parcours de formation</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="row-fields">
+        <!-- Champ Prénom -->
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName" placeholder="Votre prénom">
+          @if (registerForm.get('firstName')?.errors?.['required']) {
+            <mat-error>Le prénom est obligatoire</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Champ Nom -->
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName" placeholder="Votre nom">
+          @if (registerForm.get('lastName')?.errors?.['required']) {
+            <mat-error>Le nom est obligatoire</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Champ Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="votre@email.com">
+        @if (registerForm.get('email')?.errors?.['required']) {
+          <mat-error>L'email est obligatoire</mat-error>
+        }
+        @if (registerForm.get('email')?.errors?.['email']) {
+          <mat-error>Email invalide</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Champ Mot de passe -->
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" 
+               formControlName="password" placeholder="••••••••">
+        <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (registerForm.get('password')?.errors?.['required']) {
+          <mat-error>Le mot de passe est obligatoire</mat-error>
+        }
+        @if (registerForm.get('password')?.errors?.['minlength']) {
+          <mat-error>Minimum 6 caractères</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Champ Confirmation mot de passe -->
+      <mat-form-field appearance="outline">
+        <mat-label>Confirmer le mot de passe</mat-label>
+        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" 
+               formControlName="confirmPassword" placeholder="••••••••">
+        <button type="button" mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()">
+          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+          <mat-error>La confirmation est obligatoire</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Message d'erreur -->
+      @if (registerForm.hasError('mismatch')) {
+        <div class="register-error">
+          <mat-icon>error</mat-icon>
+          <span>Les mots de passe ne correspondent pas</span>
+        </div>
+      }
+
+      <!-- Bouton Soumettre -->
+      <div class="form-footer">
+        <button mat-raised-button color="primary" type="submit" 
+                [disabled]="registerForm.invalid || isLoading">
+          @if (!isLoading) {
+            <span>S'inscrire</span>
+          }
+          @if (isLoading) {
+            <mat-spinner diameter="20"></mat-spinner>
+          }
+        </button>
+
+        <!-- Lien vers Login -->
+        <div class="register-footer">
+          <p>Déjà un compte ? <a (click)="navigateToLogin()" class="login-link">Se connecter</a></p>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

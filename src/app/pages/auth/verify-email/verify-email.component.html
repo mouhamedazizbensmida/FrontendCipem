@@ -1,0 +1,47 @@
+<div class="verify-container">
+  <mat-card class="verify-card">
+    <div class="verify-header">
+      <img src="assets/images/logocipem.jpg" alt="CIPEM Logo" class="logo">
+      <h1>Vérification de votre email</h1>
+      <p>Nous vérifions votre adresse email</p>
+    </div>
+
+    <div class="verify-content">
+      @if (isLoading) {
+        <div class="loading-section">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Vérification en cours...</p>
+        </div>
+      }
+
+      @if (isSuccess) {
+        <div class="success-section">
+          <mat-icon class="success-icon">check_circle</mat-icon>
+          <h2>Vérification réussie !</h2>
+          <p>Votre adresse email a été vérifiée avec succès.</p>
+          <button mat-raised-button color="primary" (click)="navigateToLogin()">
+            Se connecter
+          </button>
+        </div>
+      }
+
+      @if (isError) {
+        <div class="error-section">
+          <mat-icon class="error-icon">error</mat-icon>
+          <h2>Erreur de vérification</h2>
+          <p>{{ errorMessage }}</p>
+          <button mat-raised-button color="primary" (click)="navigateToRegister()">
+            Créer un compte
+          </button>
+          <button mat-stroked-button color="primary" (click)="navigateToLogin()" class="login-btn">
+            Se connecter
+          </button>
+        </div>
+      }
+    </div>
+
+    <div class="verify-footer">
+      <p>© 2025 CIPEM. Tous droits réservés.</p>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,31 @@
+<nav [class.collapsed]="collapsed" [class.mobile-sidebar]="isMobile()" 
+     (mouseenter)="onSidebarEnter()" (mouseleave)="onSidebarLeave()">
+
+  <div class="sidebar-header">
+    <div class="logo-container" *ngIf="!collapsed">
+      <img src="assets/images/logocipem.jpg" alt="CIPEM Logo" class="logo">
+    </div>
+    <div class="logo-mini" *ngIf="collapsed">
+      <img src="assets/images/IconeCipem.png" alt="CIPEM Logo Mini" class="logo-mini-img">
+    </div>
+  </div>
+
+  <mat-nav-list>
+    <mat-list-item 
+      *ngFor="let item of menuItems" 
+      [routerLink]="item.link" 
+      routerLinkActive="active"
+      (click)="isMobile() && closeSidebar.emit()"
+      (mouseenter)="onItemMouseEnter()">
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle *ngIf="!collapsed">{{ item.title }}</span>
+    </mat-list-item>
+  </mat-nav-list>
+
+  <div class="sidebar-footer" *ngIf="!collapsed">
+    <button mat-flat-button color="primary" class="help-button">
+      <mat-icon>help</mat-icon>
+      Aide & Support
+    </button>
+  </div>
+</nav>

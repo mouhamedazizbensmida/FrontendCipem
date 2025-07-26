@@ -1,0 +1,145 @@
+<div class="dashboard-wrapper">
+  <app-sidebar [collapsed]="sidebarCollapsed" (toggleCollapse)="toggleSidebar()"></app-sidebar>
+  
+  <div *ngIf="!sidebarCollapsed && isMobile" class="sidebar-overlay" (click)="closeSidebarOnMobile()"></div>
+
+  <div class="dashboard-container" [class.sidebar-collapsed]="sidebarCollapsed" [class.sidebar-expanded]="!sidebarCollapsed">
+    <div class="header-section">
+      <div class="header-left">
+        <button mat-icon-button class="menu-toggle" (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <h1>Tableau de Bord</h1>
+      </div>
+      <div class="user-info">
+        <span class="welcome-text">Bonjour, {{ (user?.firstName + ' ' + user?.lastName) || 'Utilisateur' }}</span>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <img [src]="user?.photoUrl || 'https://cdn-icons-png.flaticon.com/512/219/219983.png'" 
+               alt="Profile" class="profile-image">
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Déconnexion</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <div *ngIf="!isLoading" class="dashboard-content">
+      <!-- Carte de bienvenue -->
+      <mat-card class="welcome-card">
+        <mat-card-header>
+          <mat-card-title>Votre progression globale</mat-card-title>
+          <mat-card-subtitle>Suivez votre avancement dans les formations</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="progress-container">
+            <mat-progress-spinner 
+              [value]="progressValue" 
+              [color]="progressValue >= 70 ? 'primary' : (progressValue >= 30 ? 'accent' : 'warn')" 
+              mode="determinate"
+              diameter="120">
+            </mat-progress-spinner>
+            <div class="progress-text">{{ progressValue }}%</div>
+          </div>
+          <div class="stats-container">
+            <div class="stat-item">
+              <mat-icon>check_circle</mat-icon>
+              <span>{{ completedFormationsCount }} Formations terminées</span>
+            </div>
+            <div class="stat-item">
+              <mat-icon>school</mat-icon>
+              <span>{{ formations.length }} Formations en cours</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Cartes principales -->
+      <div class="cards-container">
+        <!-- Mes Formations -->
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon class="card-icon">school</mat-icon>
+              Mes Formations
+            </mat-card-title>
+            <button mat-icon-button [matMenuTriggerFor]="formationsMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #formationsMenu="matMenu">
+              <button mat-menu-item (click)="viewAllFormations()">
+                <mat-icon>list</mat-icon>
+                <span>Toutes les formations</span>
+              </button>
+            </mat-menu>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item *ngFor="let formation of formations" [routerLink]="['/formations', formation.id]">
+                <mat-icon matListItemIcon>book</mat-icon>
+                <div matListItemTitle>{{ formation.titre }}</div>
+                <div matListItemLine>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="formation.progress"
+                    [color]="formation.progress === 100 ? 'primary' : 'accent'">
+                  </mat-progress-bar>
+                  <span class="progress-percent">{{ formation.progress }}%</span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Formations Récentes -->
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon class="card-icon">schedule</mat-icon>
+              Activité Récente
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item *ngFor="let activity of recentActivities">
+                <mat-icon matListItemIcon>{{ activity.icon }}</mat-icon>
+                <div matListItemTitle>{{ activity.title }}</div>
+                <div matListItemLine>
+                  <span class="activity-date">{{ activity.date | date:'mediumDate' }}</span>
+                  <span class="activity-time">{{ activity.time }}</span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Recommandations -->
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon class="card-icon">star</mat-icon>
+              Recommandations
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="recommendation" *ngFor="let rec of recommendations">
+              <div class="rec-content">
+                <h4>{{ rec.title }}</h4>
+                <p>{{ rec.description }}</p>
+              </div>
+              <button mat-flat-button color="primary" [routerLink]="rec.link">
+                Voir
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

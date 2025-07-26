@@ -1,0 +1,144 @@
+<section class="formation-details-section">
+  <div class="container">
+    @if (isLoading) {
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
+    
+    @if (error) {
+      <div class="error-message">
+        {{ error }}
+        <button (click)="loadFormation(formation.id)" class="retry-btn mat-button">
+          {{ 'FORMATION_DETAILS.RETRY_BUTTON' | translate }}
+        </button>
+      </div>
+    }
+
+    @if (!isLoading && !error) {
+      <div class="formation-header">
+        <h1>{{ formation.titre }}</h1>
+        <div class="formation-meta">
+          <span class="duration">
+            <mat-icon>schedule</mat-icon>
+            {{ 'FORMATION_DETAILS.DURATION' | translate:{hours: formation.dureeHeures} }}
+          </span>
+          <span class="category">{{ formation.categorie }}</span>
+          @if (formation.niveauDifficulte) {
+            <span class="level">
+              {{ 'FORMATION_DETAILS.LEVEL' | translate:{level: formation.niveauDifficulte} }}
+            </span>
+          }
+        </div>
+      </div>
+      
+      <div class="formation-content">
+        <div class="formation-main">
+          <div class="formation-image">
+            <img [src]="formation.imageUrl || 'assets/images/formations/formation.jpg'" [alt]="formation.titre">
+          </div>
+          
+          <div class="formation-description card">
+            <h2>{{ 'FORMATION_DETAILS.DESCRIPTION_TITLE' | translate }}</h2>
+            <p>{{ formation.description }}</p>
+          </div>
+          
+          @if (formation.modules && formation.modules.length > 0) {
+            <div class="formation-modules card">
+              <h2>{{ 'FORMATION_DETAILS.PROGRAM_TITLE' | translate }}</h2>
+              <ul>
+                @for (module of formation.modules; track module.id) {
+                  <li>
+                    <h3>{{ module.titre }}</h3>
+                    <p>{{ module.description }}</p>
+                    @if (module.contenuImageUrl) {
+                      <img [src]="module.contenuImageUrl" [alt]="module.titre" class="module-image">
+                    }
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+          
+          <div class="formation-actions">
+            <button class="btn-primary-rounded mat-button" (click)="openRegistrationModal()">
+              {{ 'FORMATION_DETAILS.REGISTER_BTN' | translate }}
+            </button>
+          </div>
+        </div>
+        
+        <div class="formation-sidebar">
+          @if (formation.formateur) {
+            <div class="trainer-info card">
+              <h3>{{ 'FORMATION_DETAILS.TRAINER_TITLE' | translate }}</h3>
+              <div class="trainer-card">
+              <div class="trainer-image">
+                <img [src]="formation.formateur.photoUrl || 'https://cdn-icons-png.flaticon.com/512/219/219983.png'" 
+                    [alt]="formation.formateur.firstName + ' ' + formation.formateur.lastName">
+              </div>
+              <div class="trainer-details">
+                <h4>{{ formation.formateur.firstName }} {{ formation.formateur.lastName }}</h4>
+                <p>{{ 'FORMATION_DETAILS.TRAINER_EXPERT' | translate:{category: formation.categorie} }}</p>
+              </div>
+            </div>
+            </div>
+          }
+          
+          <div class="formation-details card">
+            <h3>{{ 'FORMATION_DETAILS.DETAILS_TITLE' | translate }}</h3>
+            <div class="detail-item">
+              <mat-icon>calendar_today</mat-icon>
+              <span>
+                @if (formation.dateDebut) {
+                  {{ 'FORMATION_DETAILS.START_DATE' | translate:{date: formation.dateDebut | date} }}
+                } @else {
+                  {{ 'FORMATION_DETAILS.DATE_NOT_SET' | translate }}
+                }
+              </span>
+            </div>
+            <div class="detail-item">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ formation.type || ('FORMATION_DETAILS.ONLINE' | translate) }}</span>
+            </div>
+            @if (formation.prix) {
+              <div class="detail-item">
+                <mat-icon>euro_symbol</mat-icon>
+                <span class="price">
+                  {{ 'FORMATION_DETAILS.PRICE' | translate:{price: formation.prix | number:'1.0-0'} }}
+                </span>
+              </div>
+            }
+            @if (formation.certification) {
+              <div class="detail-item">
+                <mat-icon>verified</mat-icon>
+                <span>{{ 'FORMATION_DETAILS.CERTIFICATION' | translate }}</span>
+              </div>
+            }
+          </div>
+          
+          @if (relatedFormations.length > 0) {
+            <div class="related-formations card">
+              <h3>{{ 'FORMATION_DETAILS.RELATED_TITLE' | translate }}</h3>
+              <div class="related-list">
+                @for (related of relatedFormations; track related.id) {
+                  <a class="related-item" [routerLink]="['/formations', related.id]">
+                    <div class="related-image">
+                      <img [src]="related.imageUrl || 'assets/images/formations/formation.jpg'" [alt]="related.titre">
+                    </div>
+                    <div class="related-content">
+                      <h4>{{ related.titre }}</h4>
+                      <div class="related-meta">
+                        <span>{{ 'FORMATION_DETAILS.HOURS' | translate:{hours: related.dureeHeures} }}</span>
+                        <span>{{ related.categorie }}</span>
+                      </div>
+                    </div>
+                  </a>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

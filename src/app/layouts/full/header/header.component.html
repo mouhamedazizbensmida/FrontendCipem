@@ -1,0 +1,62 @@
+<mat-toolbar class="header-toolbar">
+  <!-- Logo -->
+  <div class="header-left">
+    <a routerLink="/" class="logo">
+      <img src="assets/images/logocipem.jpg" alt="CIPEM Logo" />
+    </a>
+  </div>
+
+  <!-- Menu centré -->
+  <nav class="header-center desktop-only">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'HEADER.HOME' | translate }}</a>
+    <a routerLink="/formations" routerLinkActive="active">{{ 'HEADER.TRAININGS' | translate }}</a>
+    <a routerLink="/a-propos" routerLinkActive="active">{{ 'HEADER.ABOUT' | translate }}</a>
+    <a routerLink="/contact" routerLinkActive="active">{{ 'HEADER.CONTACT' | translate }}</a>
+  </nav>
+
+  <!-- Actions à droite -->
+  <div class="header-right">
+  <div class="lang" (click)="toggleLanguage()">
+    <img [src]="getLanguageFlag()" alt="flag" class="flag-icon" />
+    <span>{{ getLanguageText() }}</span>
+  </div>
+    <button mat-button class="login-btn desktop-only" routerLink="/login">
+      {{ 'HEADER.LOGIN' | translate }}
+    </button>
+    <button mat-flat-button color="primary" class="signup-btn desktop-only" routerLink="/register">
+      {{ 'HEADER.SIGNUP' | translate }} <mat-icon>arrow_forward</mat-icon>
+    </button>
+    <button class="burger mobile-only" (click)="toggleMenu()">
+      <mat-icon>{{ showMenu ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- Menu mobile -->
+<div class="mobile-menu" *ngIf="showMenu" @fadeInOut>
+  <a routerLink="/" (click)="closeMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'HEADER.HOME' | translate }}</a>
+  <a routerLink="/formations" (click)="closeMenu()" routerLinkActive="active">{{ 'HEADER.TRAININGS' | translate }}</a>
+  <a routerLink="/a-propos" (click)="closeMenu()" routerLinkActive="active">{{ 'HEADER.ABOUT' | translate }}</a>
+  <a routerLink="/contact" (click)="closeMenu()" routerLinkActive="active">{{ 'HEADER.CONTACT' | translate }}</a>
+  <div class="mobile-auth">
+    <button mat-button class="mobile-login" routerLink="/login" (click)="closeMenu()">{{ 'HEADER.LOGIN' | translate }}</button>
+    <button mat-flat-button color="primary" class="mobile-signup" routerLink="/register" (click)="closeMenu()">
+      {{ 'HEADER.SIGNUP' | translate }} <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="user-menu" *ngIf="isAuthenticated">
+  <div class="dropdown">
+    <button class="dropdown-toggle">
+      <span class="user-name">{{ currentUser?.name }}</span>
+      <i class="icon-user"></i>
+    </button>
+    <div class="dropdown-menu">
+      <a routerLink="/dashboard" class="dropdown-item">Mon tableau de bord</a>
+      <a routerLink="/profile" class="dropdown-item">Mon profil</a>
+      <div class="dropdown-divider"></div>
+      <a (click)="logout()" class="dropdown-item">Déconnexion</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<section class="hero-section">
+  <div class="container">
+    <h1>{{ 'HOME.HERO_TITLE' | translate }}</h1>
+    <p class="subtitle">{{ 'HOME.HERO_SUBTITLE' | translate }}</p>
+    <button routerLink="/formations" class="btn btn-primary discover-btn">
+      {{ 'HOME.DISCOVER_BTN' | translate }}
+    </button>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <h2>{{ 'HOME.WHY_TITLE' | translate }}</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>{{ 'HOME.FEATURE_1_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURE_1_TEXT' | translate }}</p>
+      </div>
+      <div class="feature-card">
+        <h3>{{ 'HOME.FEATURE_2_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURE_2_TEXT' | translate }}</p>
+      </div>
+      <div class="feature-card">
+        <h3>{{ 'HOME.FEATURE_3_TITLE' | translate }}</h3>
+        <p>{{ 'HOME.FEATURE_3_TEXT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experts-section">
+  <div class="container">
+    <h2>{{ 'HOME.EXPERTS_TITLE' | translate }}</h2>
+    <div class="swiper experts-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let expert of experts">
+          <app-expert-card [expert]="expert"></app-expert-card>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-section">
+  <div class="container">
+    <h2>{{ 'HOME.TESTIMONIALS_TITLE' | translate }}</h2>
+    <div class="swiper testimonials-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let testimonial of testimonials">
+          <app-testimonial-card [testimonial]="testimonial"></app-testimonial-card>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2>
+        {{ 'HOME.CTA_TITLE' | translate }}
+        <span class="question">{{ 'HOME.CTA_QUESTION' | translate }}</span>
+      </h2>
+      <button routerLink="/inscription" class="btn btn-primary">
+        {{ 'HOME.CTA_BUTTON' | translate }}
+      </button>
+    </div>
+  </div>
+</section>

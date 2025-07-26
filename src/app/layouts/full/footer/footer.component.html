@@ -1,0 +1,51 @@
+<footer class="footer-section">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <h2>CIPEM</h2>
+        <p class="tagline">{{ 'FOOTER.TAGLINE' | translate }}</p>
+        
+        <div class="social-links">
+          <a *ngFor="let social of socialLinks" 
+             [href]="social.url" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="social-link">
+            <mat-icon>{{ social.icon }}</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div *ngFor="let section of footerLinks" class="links-section">
+          <h3>{{ section.title | translate }}</h3>
+          <ul>
+            <li *ngFor="let link of section.links">
+              <a [routerLink]="link.path" class="footer-link">{{ link.label | translate }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="newsletter">
+        <h3>{{ 'FOOTER.NEWSLETTER' | translate }}</h3>
+        <p class="newsletter-text">{{ 'FOOTER.NEWSLETTER_TEXT' | translate }}</p>
+        <div class="newsletter-form">
+          <input 
+            type="email" 
+            [placeholder]="'FOOTER.EMAIL_PLACEHOLDER' | translate" 
+            class="newsletter-input">
+          <button mat-icon-button class="newsletter-button">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        {{ 'FOOTER.COPYRIGHT' | translate:{year: currentYear} }}
+      </p>
+    </div>
+  </div>
+</footer>
