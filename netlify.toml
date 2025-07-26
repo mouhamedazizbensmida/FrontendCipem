@@ -1,3 +1,3 @@
 [build]
-  command = "npm install --legacy-peer-deps && npm run build"
-  publish = "dist/cipem-frontend/browser"  # Replace with your actual output folder
+  command = "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps && npm run build"
+  publish = "dist/cipem-frontend/browser"
